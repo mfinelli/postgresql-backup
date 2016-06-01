@@ -52,3 +52,15 @@ if [ ! -f ~/.s3cfg ]; then
     echo >&2 "S3cmd has not been configured yet. Aborting!"
     exit 2
 fi
+
+for db in "${DBS[@]}"; do
+    echo "Backing up database: ${db}."
+
+    pg_dump \
+        --clean \
+        --create \
+        --quote-all-identifiers \
+        --no-password \
+        -U "$BACKUP_USER" \
+        "$db" > "$db.sql"
+done
