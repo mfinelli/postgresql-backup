@@ -47,3 +47,25 @@ user is configured, probably through the use of a
 Don't forget that this file needs to have `600` permissions or it will fail.
 The script does no checking of the validity of the pgpass but if the values
 are not set then `pg_dump` will obviously fail.
+
+## Usage
+
+Running a backup is easy! After configuring everything just run the
+`pgbackup` script!
+
+Note that after decrypting and decompressing a backup you can restore it like
+so:
+
+```shell
+$ psql -f database.sql
+```
+
+### Crontab
+You might also find it helpful to run the backup as a cron job. Below is an
+example that runs the backup everyday at 0245, but you could obviously adjust
+it to suit your needs. I also have my s3 bucket set to delete backups older
+than three months (you could also have them transition to Glacier-class
+storage). Assuming you have the script deployed to your home directory:
+
+```
+45 2 * * * cd /home/user/postgresql-backup && /home/user/postgresql-backup/pgbackup
