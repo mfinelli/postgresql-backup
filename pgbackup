@@ -63,4 +63,12 @@ for db in "${DBS[@]}"; do
         --no-password \
         -U "$BACKUP_USER" \
         "$db" > "$db.sql"
+
+    # Inspect pre- and post-gzip filesizes.
+    ls -lh | grep "$db.sql"
+    gzip --best "$db.sql"
+    ls -lh | grep "$db.sql.gz"
+
+    gpg --cipher-algo AES256 --symmetric --yes --batch \
+        --passphrase="$PASSPHRASE" "$db.sql.gz"
 done
