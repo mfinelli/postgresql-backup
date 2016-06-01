@@ -22,3 +22,12 @@ DBS=('test_database')
 # You can list your buckets with `s3cmd ls`.
 BUCKET="your-backup-bucket"
 ```
+
+### `pg_dump`
+
+You also need to make sure that the username and password for the `pg_dump`
+user is configured, probably through the use of a
+[`.pgpass` file](https://www.postgresql.org/docs/current/static/libpq-pgpass.html).
+Don't forget that this file needs to have `600` permissions or it will fail.
+The script does no checking of the validity of the pgpass but if the values
+are not set then `pg_dump` will obviously fail.
