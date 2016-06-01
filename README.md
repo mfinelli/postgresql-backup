@@ -20,9 +20,10 @@ Configuration for the database backup is saved in your home directory in the
 `.pgbackup` file. It is basically just another bash script that defines the
 variables that we need which we source before running the backup.
 
-You need to define three variables: a password with which to encrypt the
-backups before uploading to s3, a list of databases to backup and the name of
-an S3 bucket where the backups will be saved.
+You need to define four variables: a password with which to encrypt the
+backups before uploading to s3, a list of databases to backup, a user to use
+to backup the databases, and the name of an S3 bucket where the backups
+will be saved.
 
 ```shell
 # Choose a long, strong password to encrypt the backups.
@@ -30,6 +31,9 @@ PASSPHRASE="SomeReallyGoodPassword"
 
 # List of databases to backup:
 DBS=('test_database')
+
+# User with access permissions on the databases.
+BACKUP_USER="postgres"
 
 # You can list your buckets with `s3cmd ls`.
 BUCKET="your-backup-bucket"

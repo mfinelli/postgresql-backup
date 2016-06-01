@@ -29,6 +29,11 @@ if [[ ${#DBS[@]} -lt 1 ]]; then
     exit 1
 fi
 
+if [[ -z "$BACKUP_USER" ]]; then
+    echo >&2 "You must specify a user to use for backups!"
+    exit 1
+fi
+
 if [[ -z "$BUCKET" ]]; then
     echo >&2 "You must specify an s3 bucket for uploading!"
     exit 1
